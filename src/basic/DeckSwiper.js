@@ -7,6 +7,12 @@ import mapPropsToStyleNames from "../Utils/mapPropsToStyleNames";
 
 const SWIPE_THRESHOLD = 120;
 
+const isEqualSubset = (a, b) => {
+  for (let key in b) if (a[key] !== b[key]) return false;
+
+  return true;
+};
+
 class DeckSwiper extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +33,7 @@ class DeckSwiper extends Component {
   }
 
   componentWillReceiveProps({ dataSource }) {
-    if (dataSource.length !== this.props.dataSource.length) {
+    if (!isEqualSubset(dataSource,this.props.dataSource)) {
       if (dataSource.length <= 1) {
         this.setState({
           ...this.state,
